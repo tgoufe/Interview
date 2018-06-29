@@ -20,3 +20,14 @@
 ```markdown
      
 ```
+
+### 5.Doctype是什么? HTML5 为什么只需要写 <!DOCTYPE HTML>？
+```markdown
+
+```
+
+### 6.什么是渐进增强和优雅降级?
+```markdown
+
+```
+

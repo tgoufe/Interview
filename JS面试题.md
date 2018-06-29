@@ -77,7 +77,10 @@
 ### 6.基本的DOM操作有哪些？
 
 ```markdown
-    增删改查
+    获取节点:getElementById、getElementsByClassName、getElementsByTagName、 getElementsByName、querySelector、querySelectorAll,
+    对元素属性进行操作:getAttribute、 setAttribute、removeAttribute，
+    对节点进行增删改:appendChild、insertBefore、replaceChild、removeChild、 createElement
+    ……
 ```
 
 ### 7.数组有哪些原生方法？
@@ -94,7 +97,12 @@
 ```
 #### 7.1怎么区分数组和对象
 ```javascript
-
+   - Object.prototype.toString.call(arr) === "[object Array]" //数组 => true;
+   - Array.isArray(arr);//数组 => true;
+   - arr instanceof Array;//数组 => true;
+   - arr.constructor == Array;//数组 => true;
+   - Array.prototype.isPrototypeOf(arr);//数组 => true;
+   - typeof arr && !isNaN(arr.length);//数组 => true;
 ```
 #### 7.2求两个数组的并集、交集、差集？
 ```javascript
@@ -164,6 +172,9 @@
 ---
 
 ### 11.Js继承有多少种方式？原理是什么？有什么缺点？
+```markdown
+
+```
 
 ### 12.怎么理解js作用域？什么是作用域链？ => 闭包
 
@@ -197,5 +208,11 @@
 ```
 
 ### 15.从浏览器输入url到页面渲染经历了哪些步骤?
+```markdown
 
-### 16.什么是事件冒泡、事件捕获？ => js的事件代理、事件委托
+```
+
+### 16.什么是事件冒泡、事件捕获？怎么理解事件代理、事件委托
+```markdown
+
+```
