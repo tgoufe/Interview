@@ -83,18 +83,26 @@
     ……
 ```
 
-### 7.数组有哪些原生方法？
+### 7.Array对象方法有哪些方法？
 
 ```javascript
     - push() //添加元素到数组的末尾
     - unshift() //添加元素到数组的头部
     - pop() //删除数组末尾的元素
     - shift() //删除数组头部的元素
-    - reverse()
-    - sort()
-    - indexOf() //找出某个元素在数组中的索引
+    - reverse() //颠倒数组中元素的顺序
+    - sort() //对数组的元素进行排序
+    - indexOf() //找出/某个元素在数组中的索引
     - splice() //通过索引删除某个元素
+    - concat() //连接两个或更多的数组
+    - join() //	把数组的所有元素放入一个字符串
+    - slice() //从某个已有的数组返回选定的元素
+    - valueOf() //返回数组对象的原始值
+    - toString() //把数组转换为字符串
+    - toLocaleString() //	把数组转换为本地数组
 ```
+[MDN]('https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array')
+
 #### 7.1怎么区分数组和对象
 ```javascript
    - Object.prototype.toString.call(arr) === "[object Array]" //数组 => true;
@@ -173,10 +181,10 @@
 
 ### 11.Js继承有多少种方式？原理是什么？有什么缺点？
 ```markdown
-
+   
 ```
 
-### 12.怎么理解js作用域？什么是作用域链？ => 闭包
+### 12.怎么理解js作用域？什么是作用域链？怎么理解闭包？
 ```markdown
 
 ```
