@@ -101,7 +101,7 @@
     - toString() //把数组转换为字符串
     - toLocaleString() //	把数组转换为本地数组
 ```
-[MDN]('https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array')
+[MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array)
 
 #### 7.1怎么区分数组和对象
 ```javascript
