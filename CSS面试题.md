@@ -27,7 +27,8 @@
 
 ### 4.什么是外边距合并
 ```markdown
-
+  外边距合并:当两个垂直外边距相遇时，它们将形成一个外边距。
+  合并后的外边距的高度等于两个发生合并的外边距的高度中的较大者。
 ```
 
 ### 5.如何在页面画一个半圆
@@ -37,8 +38,15 @@
 
 ### 6.如何在页面画一个三角形
 ```css
-
+  #demo {
+    width: 0;
+    height: 0;
+    border-width: 20px;
+    border-style: solid;
+    border-color: transparent transparent red transparent;
+  }
 ```
+**把上、左、右三条边隐藏掉（颜色设为 transparent）,也可以使用canvas、svg、旋转正方形等方法**
 
 ### 7.什么是HTML语义化？
 ```markdown
@@ -51,8 +59,17 @@
     -后处理器：clean-css、Autoprefixer
 ```
 ### 9.平时会使用哪些CSS3新的属性
-```css
-
+```markdown
+    - Selector   //CSS3选择器
+    - @Font-face //加载字体样式
+    - Word-wrap & Text-overflow //换行和超出显示
+    - Text-decoration //文字渲染
+    - multi-column layout //多列布局
+    - CSS3 border //边框圆角、阴影
+    - Gradient & Shadow & Reflect //渐变、阴影、反射
+    - CSS3 的盒子模型
+    - Transitions & Transforms & Animation //动画
+    
 ```
 
 ### 10.响应式布局的基础是什么？
