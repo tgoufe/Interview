@@ -106,3 +106,5 @@ Webpack 的运行流程是一个串行的过程，从启动到结束会依次执
 ### 参考文章
  * [关于 webpack 的面试题有哪些？](https://www.zhihu.com/question/266788138/answer/314450633)
  * [前端面试之webpack面试常见问题](https://segmentfault.com/a/1190000014148611)
+ * [《深入浅出webpack》电子版](https://wangchong.tech/webpack/)
+ 
