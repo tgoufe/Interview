@@ -86,7 +86,15 @@ Webpack 的运行流程是一个串行的过程，从启动到结束会依次执
 
 
 ### 是否写过Loader和Plugin？描述一下编写loader或plugin的思路？
+Loader像一个"翻译官"把读到的源文件内容转义成新的文件内容，并且每个Loader通过链式操作，将源文件一步步翻译成想要的样子。
 
+编写Loader时要遵循单一原则，每个Loader只做一种"转义"工作。
+每个Loader的拿到的是源文件内容（`source`），可以通过返回值的方式将处理后的内容输出，也可以调用`this.callback()`方法，将内容返回给webpack。
+还可以通过 `this.async()`生成一个`callback`函数，再用这个callback将处理后的内容输出出去。
+此外`webpack`还为开发者准备了开发loader的工具函数集——`loader-utils`。
+
+相对于Loader而言，Plugin的编写就灵活了许多。
+webpack在运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。
 
 
 ### webpack的热更新是如何做到的？说明其原理？
@@ -99,9 +107,30 @@ Webpack 的运行流程是一个串行的过程，从启动到结束会依次执
 
 ### 如何提高webpack的构建速度？
 
+ 1. 多入口情况下，使用`CommonsChunkPlugin`来提取公共代码
+ 2. 通过 externals 配置来提取常用库
+ 3. 利用 DllPlugin 和 DllReferencePlugin 预编译资源模块
+    
+    通过`DllPlugin`来对那些我们引用但是绝对不会修改的npm包来进行预编译，再通过`DllReferencePlugin`将预编译的模块加载进来。
+    
+ 4. 使用` Happypack` 实现多线程加速编译
+ 5. 使用`webpack-uglify-parallel`来提升`uglifyPlugin`的压缩速度
+ 
+    原理上`webpack-uglify-parallel`采用了多核并行压缩来提升压缩速度
+    
+ 6. 使用`Tree-shaking`和`Scope Hoisting`来剔除多余代码
 
 
 ### 怎么配置单页应用怎么配置多页应用？
+单页应用可以理解为webpack的标准模式，直接在`entry`中指定单页应用的入口即可，这里不再赘述
+
+多页应用的话，可以使用webpack的 `AutoWebPlugin`来完成简单自动化的构建，但是前提是项目的目录结构必须遵守他预设的规范。
+
+
+### npm打包时需要注意哪些？如何利用webpack来更好的构建？
+
+
+### 如何在vue项目中实现按需加载？
 
 
 
@@ -109,4 +138,5 @@ Webpack 的运行流程是一个串行的过程，从启动到结束会依次执
  * [关于 webpack 的面试题有哪些？](https://www.zhihu.com/question/266788138/answer/314450633)
  * [前端面试之webpack面试常见问题](https://segmentfault.com/a/1190000014148611)
  * [《深入浅出webpack》电子版](https://wangchong.tech/webpack/)
+ * [webpack 构建性能优化策略小结](https://segmentfault.com/a/1190000007891318)
  
