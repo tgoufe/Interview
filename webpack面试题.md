@@ -19,7 +19,7 @@ webpack是基于入口的。webpack会递归解析入口所需要加载的所有
     gulp更像后端开发者的思路，需要对于整个流程了如指掌
     webpack更倾向于前端开发者的思路
 
-
+-----------
 ### ⁉️与webpack类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用webpack？
 同样是基于入口的打包工具还有以下几个主流的：
  * webpack
@@ -33,7 +33,7 @@ webpack是基于入口的。webpack会递归解析入口所需要加载的所有
  * parcel适用于…… 我也不知道
  
 
-
+-----------
 
 ### 有哪些常见的Loader？他们是解决什么问题的？
  * file-loader：把文件输出到一个文件夹中，在代码中通过相对 URL 去引用输出的文件
@@ -45,13 +45,13 @@ webpack是基于入口的。webpack会递归解析入口所需要加载的所有
  * style-loader：把 CSS 代码注入到 JavaScript 中，通过 DOM 操作去加载 CSS。
  * eslint-loader：通过 ESLint 检查 JavaScript 代码
 
-
+-----------
 ### 有哪些常见的Plugin？他们是解决什么问题的？
  * define-plugin：定义环境变量
  * commons-chunk-plugin：提取公共代码
  * uglifyjs-webpack-plugin：通过 UglifyES 压缩 ES6 代码
 
-
+-----------
 ### Loader和Plugin的不同？
 
 ##### 不同的作用
@@ -69,7 +69,7 @@ webpack是基于入口的。webpack会递归解析入口所需要加载的所有
  类型为数组，每一项是一个`plugin`的实例，参数都通过构造函数传入。
 
 
-
+-----------
 ### webpack的构建流程是什么?从读取配置到输出文件这个过程尽量说全
 
 Webpack 的运行流程是一个串行的过程，从启动到结束会依次执行以下流程：
@@ -84,7 +84,7 @@ Webpack 的运行流程是一个串行的过程，从启动到结束会依次执
  
 在以上过程中，Webpack 会在特定的时间点广播出特定的事件，插件在监听到感兴趣的事件后会执行特定的逻辑，并且插件可以调用 Webpack 提供的 API 改变 Webpack 的运行结果。
 
-
+-----------
 ### 是否写过Loader和Plugin？描述一下编写loader或plugin的思路？
 Loader像一个"翻译官"把读到的源文件内容转义成新的文件内容，并且每个Loader通过链式操作，将源文件一步步翻译成想要的样子。
 
@@ -96,7 +96,7 @@ Loader像一个"翻译官"把读到的源文件内容转义成新的文件内容
 相对于Loader而言，Plugin的编写就灵活了许多。
 webpack在运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。
 
-
+-----------
 ### webpack的热更新是如何做到的？说明其原理？
 
 webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
@@ -114,7 +114,7 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
  6. HotModuleReplacement.runtime 是客户端 HMR 的中枢，它接收到上一步传递给他的新模块的 hash 值，它通过 JsonpMainTemplate.runtime 向 server 端发送 Ajax 请求，服务端返回一个 json，该 json 包含了所有要更新的模块的 hash 值，获取到更新列表后，该模块再次通过 jsonp 请求，获取到最新的模块代码。这就是上图中 7、8、9 步骤。
  7. 而第 10 步是决定 HMR 成功与否的关键步骤，在该步骤中，HotModulePlugin 将会对新旧模块进行对比，决定是否更新模块，在决定更新模块后，检查模块之间的依赖关系，更新模块的同时更新模块间的依赖引用。
  8. 最后一步，当 HMR 失败后，回退到 live reload 操作，也就是进行浏览器刷新来获取最新打包代码。
-
+-----------
 ### 如何利用webpack来优化前端性能？（提高性能和体验）
 用webpack优化前端性能是指优化webpack的输出结果，让打包的最终结果在浏览器运行快速高效。
 
@@ -126,7 +126,7 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
  
  
 
-
+-----------
 ### 如何提高webpack的构建速度？
 
  1. 多入口情况下，使用`CommonsChunkPlugin`来提取公共代码
@@ -142,7 +142,7 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
     
  6. 使用`Tree-shaking`和`Scope Hoisting`来剔除多余代码
 
-
+-----------
 ### 怎么配置单页应用怎么配置多页应用？
 单页应用可以理解为webpack的标准模式，直接在`entry`中指定单页应用的入口即可，这里不再赘述
 
@@ -151,6 +151,7 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
  * 每个页面都有公共的代码，可以将这些代码抽离出来，避免重复的加载。比如，每个页面都引用了同一套css样式表
  * 随着业务的不断扩展，页面可能会不断的追加，所以一定要让入口的配置足够灵活，避免每次添加新页面还需要修改构建配置
 
+-----------
 
 ### npm打包时需要注意哪些？如何利用webpack来更好的构建？
 `Npm`是目前最大的 JavaScript 模块仓库，里面有来自全世界开发者上传的可复用模块。你可能一直JS模块的使用者，但是有些情况你也会去选择上传自己开发的模块。
@@ -194,9 +195,40 @@ module.exports = {
 };
 ```
 
+-----------
 
 ### 如何在vue项目中实现按需加载？
 
+#### Vue UI组件库的按需加载
+为了快速开发前端项目，经常会引入现成的UI组件库如ElementUI、iView等，但是他们的体积和他们所提供的功能一样，是很庞大的。
+而通常情况下，我们仅仅需要少量的几个组件就足够了，但是我们却将庞大的组件库打包到我们的源码中，造成了不必要的开销。
+
+不过很多组件库已经提供了现成的解决方案，如Element出品的[`babel-plugin-component`](https://github.com/ElementUI/babel-plugin-component)和AntDesign出品的[`babel-plugin-import`](https://github.com/ant-design/babel-plugin-import)
+安装以上插件后，在`.babelrc`配置中或`babel-loader`的参数中进行设置，即可实现组件按需加载了。
+```javascript
+{
+  "presets": [["es2015", { "modules": false }]],
+  "plugins": [
+    [
+      "component",
+      {
+        "libraryName": "element-ui",
+        "styleLibraryName": "theme-chalk"
+      }
+    ]
+  ]
+}
+```
+
+#### 单页应用的按需加载
+现在很多前端项目都是通过单页应用的方式开发的，但是随着业务的不断扩展，会面临一个严峻的问题——首次加载的代码量会越来越多，影响用户的体验。
+
+    
+通过`import(*)`语句来控制加载时机，webpack内置了对于`import(*)`的解析，会将`import(*)`中引入的模块作为一个新的入口在生成一个chunk。
+当代码执行到`import(*)`语句时，会去加载Chunk对应生成的文件。`import()`会返回一个Promise对象，所以为了让浏览器支持，需要事先注入Promise polyfill
+
+
+-----------
 
 
 ### 参考文章
