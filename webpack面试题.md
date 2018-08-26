@@ -1,6 +1,6 @@
 # Webpack相关面试题
 
-### webpack与grunt、gulp的不同？
+### ⁉️webpack与grunt、gulp的不同？
 三者都是前端构建工具，grunt和gulp在早期比较流行，现在webpack相对来说比较主流，不过一些轻量化的任务还是会用gulp来处理，比如单独打包CSS文件等。
 > grunt不了解，谁补充一下吧 TODO
 
@@ -20,7 +20,7 @@ webpack是基于入口的。webpack会递归解析入口所需要加载的所有
     webpack更倾向于前端开发者的思路
 
 
-### 与webpack类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用webpack？
+### ⁉️与webpack类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用webpack？
 同样是基于入口的打包工具还有以下几个主流的：
  * webpack
  * rollup
@@ -105,6 +105,7 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
 ##### 原理：
 ![webpack运行机制图](https://pic3.zhimg.com/80/v2-f7139f8763b996ebfa28486e160f6378_hd.jpg)
 
+首先要知道server端和client端都做了处理工作
  1. 第一步，在 webpack 的 watch 模式下，文件系统中某一个文件发生修改，webpack 监听到文件变化，根据配置文件对模块重新编译打包，并将打包后的代码通过简单的 JavaScript 对象保存在内存中。
  2. 第二步是 webpack-dev-server 和 webpack 之间的接口交互，而在这一步，主要是 dev-server 的中间件 webpack-dev-middleware 和 webpack 之间的交互，webpack-dev-middleware 调用 webpack 暴露的 API对代码变化进行监控，并且告诉 webpack，将代码打包到内存中。
  3. 第三步是 webpack-dev-server 对文件变化的一个监控，这一步不同于第一步，并不是监控代码变化重新打包。当我们在配置文件中配置了devServer.watchContentBase 为 true 的时候，Server 会监听这些配置文件夹中静态文件的变化，变化后会通知浏览器端对应用进行 live reload。注意，这儿是浏览器刷新，和 HMR 是两个概念。
@@ -114,8 +115,16 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
  7. 而第 10 步是决定 HMR 成功与否的关键步骤，在该步骤中，HotModulePlugin 将会对新旧模块进行对比，决定是否更新模块，在决定更新模块后，检查模块之间的依赖关系，更新模块的同时更新模块间的依赖引用。
  8. 最后一步，当 HMR 失败后，回退到 live reload 操作，也就是进行浏览器刷新来获取最新打包代码。
 
-### 如何利用webpack来优化前端性能？
+### 如何利用webpack来优化前端性能？（提高性能和体验）
+用webpack优化前端性能是指优化webpack的输出结果，让打包的最终结果在浏览器运行快速高效。
 
+ * 压缩代码。删除多余的代码、注释、简化代码的写法等等方式。可以利用webpack的`UglifyJsPlugin`和`ParallelUglifyPlugin`来压缩JS文件，
+ 利用`cssnano`（css-loader?minimize）来压缩css
+ * 利用CDN加速。在构建过程中，将引用的静态资源路径修改为CDN上对应的路径。可以利用webpack对于`output`参数和各loader的`publicPath`参数来修改资源路径
+ * 删除死代码（Tree Shaking）。将代码中永远不会走到的片段删除掉。可以通过在启动webpack时追加参数`--optimize-minimize`来实现
+ * 提取公共代码。
+ 
+ 
 
 
 ### 如何提高webpack的构建速度？
@@ -138,9 +147,52 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
 单页应用可以理解为webpack的标准模式，直接在`entry`中指定单页应用的入口即可，这里不再赘述
 
 多页应用的话，可以使用webpack的 `AutoWebPlugin`来完成简单自动化的构建，但是前提是项目的目录结构必须遵守他预设的规范。
+多页应用中要注意的是：
+ * 每个页面都有公共的代码，可以将这些代码抽离出来，避免重复的加载。比如，每个页面都引用了同一套css样式表
+ * 随着业务的不断扩展，页面可能会不断的追加，所以一定要让入口的配置足够灵活，避免每次添加新页面还需要修改构建配置
 
 
 ### npm打包时需要注意哪些？如何利用webpack来更好的构建？
+`Npm`是目前最大的 JavaScript 模块仓库，里面有来自全世界开发者上传的可复用模块。你可能一直JS模块的使用者，但是有些情况你也会去选择上传自己开发的模块。
+关于NPM模块上传的方法可以去[官网](https://docs.npmjs.com/)上进行学习，这里只讲解如何利用webpack来构建。
+
+NPM模块需要注意以下问题：
+ 1. 要支持CommonJS模块化规范，所以要求打包后的最后结果应该也遵守该规则。
+ 2. Npm模块使用者的环境是不确定的，很有可能并不支持ES6，所以打包的最后结果应该是采用ES5编写的。并且如果ES5是经过转换的，请最好连同SourceMap一同上传。
+ 3. Npm包大小应该是尽量小（有些仓库会限制包大小）
+ 4. 发布的模块不能将依赖的模块也一同打包，应该让用户选择性的去自行安装。这样可以避免模块应用者再次打包时出现底层模块被重复打包的情况。
+ 5. 该 UI 组件依赖的其它资源文件例如 CSS 文件也需要包含在发布的模块里。
+ 
+基于以上需要注意的问题，我们可以对于webpack配置做以下扩展和优化：
+ 1. CommonJS模块化规范的解决方案： 设置`output.libraryTarget='commonjs2'`使输出的代码符合CommonJS2 模块化规范，以供给其它模块导入使用
+ 2. 输出ES5代码的解决方案：使用`babel-loader`把 ES6 代码转换成 ES5 的代码。再通过开启`devtool: 'source-map'`输出SourceMap以发布调试。
+ 3. Npm包大小尽量小的解决方案：Babel 在把 ES6 代码转换成 ES5 代码时会注入一些辅助函数，最终导致每个输出的文件中都包含这段辅助函数的代码，造成了代码的冗余。解决方法是修改`.babelrc`文件，为其加入`transform-runtime`插件
+ 4. 不能将依赖模块打包到NPM模块中的解决方案：使用`externals`配置项来告诉webpack哪些模块不需要打包。
+ 5. 对于依赖的资源文件打包的解决方案：通过`css-loader`和`extract-text-webpack-plugin`来实现，配置如下：
+ ```javascript
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        // 增加对 CSS 文件的支持
+        test: /\.css/,
+        // 提取出 Chunk 中的 CSS 代码到单独的文件中
+        use: ExtractTextPlugin.extract({
+          use: ['css-loader']
+        }),
+      },
+    ]
+  },
+  plugins: [
+    new ExtractTextPlugin({
+      // 输出的 CSS 文件名称
+      filename: 'index.css',
+    }),
+  ],
+};
+```
 
 
 ### 如何在vue项目中实现按需加载？
@@ -152,6 +204,5 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
  * [前端面试之webpack面试常见问题](https://segmentfault.com/a/1190000014148611)
  * [《深入浅出webpack》电子版](https://wangchong.tech/webpack/)
  * [webpack 构建性能优化策略小结](https://segmentfault.com/a/1190000007891318)
- * [Webpack热替换(HMR)机制之探究笔记](http://shenzm.cn/blog/message/26)
  * [Webpack HMR 原理解析](https://zhuanlan.zhihu.com/p/30669007)
  
