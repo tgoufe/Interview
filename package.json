@@ -1,0 +1,30 @@
+{
+  "name": "interview",
+  "version": "1.0.0",
+  "description": "This is a interview Q&A collection of TGFE",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tgoufe/Interview.git"
+  },
+  "keywords": [
+    "interview",
+    "front-end",
+    "TGFE",
+    "JavaScript",
+    "CSS",
+    "Webpack"
+  ],
+  "author": "Xuqiang, Wangchong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tgoufe/Interview/issues"
+  },
+  "homepage": "https://github.com/tgoufe/Interview#readme",
+  "dependencies": {
+    "docsify-cli": "^4.2.1"
+  }
+}
