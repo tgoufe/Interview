@@ -2,17 +2,16 @@
 
 ### 1. ⁉️webpack与grunt、gulp的不同？
 三者都是前端构建工具，grunt和gulp在早期比较流行，现在webpack相对来说比较主流，不过一些轻量化的任务还是会用gulp来处理，比如单独打包CSS文件等。
-> grunt不了解，谁补充一下吧 TODO
 
-gulp是基于任务和流（Task、Stream）的。类似jQuery，找到一个（或一类）文件，对其做一系列链式操作，更新流上的数据，
+[grunt](https://www.gruntjs.net/)和[gulp](https://www.gulpjs.com.cn/)是基于任务和流（Task、Stream）的。类似jQuery，找到一个（或一类）文件，对其做一系列链式操作，更新流上的数据，
 整条链式操作构成了一个任务，多个任务就构成了整个web的构建。
 
-webpack是基于入口的。webpack会递归解析入口所需要加载的所有资源文件，然后不同的Loader来处理不同的文件，Plugin来扩展webpack功能。
+webpack是基于入口的。webpack会自动地递归解析入口所需要加载的所有资源文件，然后不同的Loader来处理不同的文件，Plugin来扩展webpack功能。
 
 所以总结一下：
  * 从构建思路来说
  
-    gulp需要开发者将整个前端构建过程拆分成对个Task，并合理控制所有Task的调用关系
+    gulp和grunt需要开发者将整个前端构建过程拆分成对个Task，并合理控制所有Task的调用关系
     webpack需要开发者找到入口，并清楚对于不同的资源使用什么Loader做何种解析或加工
  * 对于知识背景来说
  
@@ -30,7 +29,8 @@ webpack是基于入口的。webpack会递归解析入口所需要加载的所有
  **从应用场景上来看：**
  * webpack适用于大型复杂的前端站点构建
  * rollup适用于基础库的打包
- * parcel适用于…… 我也不知道
+ * parcel适用于简单的实验性项目
+ > 由于parcel在打包过程中给出的调试信息十分有限，所以一旦打包出错难以调试，所以不建议复杂的项目使用parcel
  
 
 -----------
