@@ -1,6 +1,6 @@
 # Webpack相关面试题
 
-### ⁉️webpack与grunt、gulp的不同？
+### 1. ⁉️webpack与grunt、gulp的不同？
 三者都是前端构建工具，grunt和gulp在早期比较流行，现在webpack相对来说比较主流，不过一些轻量化的任务还是会用gulp来处理，比如单独打包CSS文件等。
 > grunt不了解，谁补充一下吧 TODO
 
@@ -20,7 +20,7 @@ webpack是基于入口的。webpack会递归解析入口所需要加载的所有
     webpack更倾向于前端开发者的思路
 
 -----------
-### ⁉️与webpack类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用webpack？
+### 2.⁉️与webpack类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用webpack？
 同样是基于入口的打包工具还有以下几个主流的：
  * webpack
  * rollup
@@ -35,7 +35,7 @@ webpack是基于入口的。webpack会递归解析入口所需要加载的所有
 
 -----------
 
-### 有哪些常见的Loader？他们是解决什么问题的？
+### 3.有哪些常见的Loader？他们是解决什么问题的？
  * file-loader：把文件输出到一个文件夹中，在代码中通过相对 URL 去引用输出的文件
  * url-loader：和 file-loader 类似，但是能在文件很小的情况下以 base64 的方式把文件内容注入到代码中去
  * source-map-loader：加载额外的 Source Map 文件，以方便断点调试
@@ -46,13 +46,13 @@ webpack是基于入口的。webpack会递归解析入口所需要加载的所有
  * eslint-loader：通过 ESLint 检查 JavaScript 代码
 
 -----------
-### 有哪些常见的Plugin？他们是解决什么问题的？
+### 4.有哪些常见的Plugin？他们是解决什么问题的？
  * define-plugin：定义环境变量
  * commons-chunk-plugin：提取公共代码
  * uglifyjs-webpack-plugin：通过 UglifyES 压缩 ES6 代码
 
 -----------
-### Loader和Plugin的不同？
+### 5.Loader和Plugin的不同？
 
 **不同的作用**
  * **Loader**直译为"加载器"。Webpack将一切文件视为模块，但是webpack原生是只能解析js文件，如果想将其他文件也打包的话，就会用到`loader`。
@@ -70,7 +70,7 @@ webpack是基于入口的。webpack会递归解析入口所需要加载的所有
 
 
 -----------
-### webpack的构建流程是什么?从读取配置到输出文件这个过程尽量说全
+### 6.webpack的构建流程是什么?从读取配置到输出文件这个过程尽量说全
 
 Webpack 的运行流程是一个串行的过程，从启动到结束会依次执行以下流程：
 
@@ -85,7 +85,7 @@ Webpack 的运行流程是一个串行的过程，从启动到结束会依次执
 在以上过程中，Webpack 会在特定的时间点广播出特定的事件，插件在监听到感兴趣的事件后会执行特定的逻辑，并且插件可以调用 Webpack 提供的 API 改变 Webpack 的运行结果。
 
 -----------
-### 是否写过Loader和Plugin？描述一下编写loader或plugin的思路？
+### 7.是否写过Loader和Plugin？描述一下编写loader或plugin的思路？
 Loader像一个"翻译官"把读到的源文件内容转义成新的文件内容，并且每个Loader通过链式操作，将源文件一步步翻译成想要的样子。
 
 编写Loader时要遵循单一原则，每个Loader只做一种"转义"工作。
@@ -97,7 +97,7 @@ Loader像一个"翻译官"把读到的源文件内容转义成新的文件内容
 webpack在运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。
 
 -----------
-### webpack的热更新是如何做到的？说明其原理？
+### 8.webpack的热更新是如何做到的？说明其原理？
 
 webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
 这个机制可以做到不用刷新浏览器而将新变更的模块替换掉旧的模块。
@@ -114,8 +114,10 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
  6. HotModuleReplacement.runtime 是客户端 HMR 的中枢，它接收到上一步传递给他的新模块的 hash 值，它通过 JsonpMainTemplate.runtime 向 server 端发送 Ajax 请求，服务端返回一个 json，该 json 包含了所有要更新的模块的 hash 值，获取到更新列表后，该模块再次通过 jsonp 请求，获取到最新的模块代码。这就是上图中 7、8、9 步骤。
  7. 而第 10 步是决定 HMR 成功与否的关键步骤，在该步骤中，HotModulePlugin 将会对新旧模块进行对比，决定是否更新模块，在决定更新模块后，检查模块之间的依赖关系，更新模块的同时更新模块间的依赖引用。
  8. 最后一步，当 HMR 失败后，回退到 live reload 操作，也就是进行浏览器刷新来获取最新打包代码。
+
+
 -----------
-### 如何利用webpack来优化前端性能？（提高性能和体验）
+### 9.如何利用webpack来优化前端性能？（提高性能和体验）
 用webpack优化前端性能是指优化webpack的输出结果，让打包的最终结果在浏览器运行快速高效。
 
  * 压缩代码。删除多余的代码、注释、简化代码的写法等等方式。可以利用webpack的`UglifyJsPlugin`和`ParallelUglifyPlugin`来压缩JS文件，
@@ -127,7 +129,7 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
  
 
 -----------
-### 如何提高webpack的构建速度？
+### 10.如何提高webpack的构建速度？
 
  1. 多入口情况下，使用`CommonsChunkPlugin`来提取公共代码
  2. 通过 externals 配置来提取常用库
@@ -143,7 +145,7 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
  6. 使用`Tree-shaking`和`Scope Hoisting`来剔除多余代码
 
 -----------
-### 怎么配置单页应用怎么配置多页应用？
+### 11.怎么配置单页应用怎么配置多页应用？
 单页应用可以理解为webpack的标准模式，直接在`entry`中指定单页应用的入口即可，这里不再赘述
 
 多页应用的话，可以使用webpack的 `AutoWebPlugin`来完成简单自动化的构建，但是前提是项目的目录结构必须遵守他预设的规范。
@@ -153,7 +155,7 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
 
 -----------
 
-### npm打包时需要注意哪些？如何利用webpack来更好的构建？
+### 12.npm打包时需要注意哪些？如何利用webpack来更好的构建？
 `Npm`是目前最大的 JavaScript 模块仓库，里面有来自全世界开发者上传的可复用模块。你可能一直JS模块的使用者，但是有些情况你也会去选择上传自己开发的模块。
 关于NPM模块上传的方法可以去[官网](https://docs.npmjs.com/)上进行学习，这里只讲解如何利用webpack来构建。
 
@@ -197,7 +199,7 @@ module.exports = {
 
 -----------
 
-### 如何在vue项目中实现按需加载？
+### 13.如何在vue项目中实现按需加载？
 
 **Vue UI组件库的按需加载**
 为了快速开发前端项目，经常会引入现成的UI组件库如ElementUI、iView等，但是他们的体积和他们所提供的功能一样，是很庞大的。
