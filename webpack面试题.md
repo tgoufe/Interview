@@ -1,35 +1,41 @@
 # Webpack相关面试题
 
-### 1. ⁉️webpack与grunt、gulp的不同？
+
+### 0. 为什么要总结webpack相关的面试题
+随着现代前端开发的复杂度和规模越来越庞大，已经不能抛开工程化来独立开发了，如react的jsx代码必须编译后才能在浏览器中使用；又如sass和less的代码浏览器也是不支持的。
+而如果摒弃了这些开发框架，那么开发的效率将大幅下降。在众多前端工程化工具中，`webpack`脱颖而出成为了当今最流行的前端构建工具。
+然而大多数的使用者都只是单纯的会`使用`，而并不知道其深层的原理。希望通过以下的面试题总结可以帮助大家温故知新、查缺补漏。
+
+### 1. webpack与grunt、gulp的不同？
 三者都是前端构建工具，grunt和gulp在早期比较流行，现在webpack相对来说比较主流，不过一些轻量化的任务还是会用gulp来处理，比如单独打包CSS文件等。
 
 [grunt](https://www.gruntjs.net/)和[gulp](https://www.gulpjs.com.cn/)是基于任务和流（Task、Stream）的。类似jQuery，找到一个（或一类）文件，对其做一系列链式操作，更新流上的数据，
-整条链式操作构成了一个任务，多个任务就构成了整个web的构建。
+整条链式操作构成了一个任务，多个任务就构成了整个web的构建流程。
 
-webpack是基于入口的。webpack会自动地递归解析入口所需要加载的所有资源文件，然后不同的Loader来处理不同的文件，Plugin来扩展webpack功能。
+webpack是基于入口的。webpack会自动地递归解析入口所需要加载的所有资源文件，然后用不同的Loader来处理不同的文件，用Plugin来扩展webpack功能。
 
 所以总结一下：
  * 从构建思路来说
  
-    gulp和grunt需要开发者将整个前端构建过程拆分成对个Task，并合理控制所有Task的调用关系
-    webpack需要开发者找到入口，并清楚对于不同的资源使用什么Loader做何种解析或加工
+    gulp和grunt需要开发者将整个前端构建过程拆分成多个`Task`，并合理控制所有`Task`的调用关系
+    webpack需要开发者找到入口，并需要清楚对于不同的资源应该使用什么Loader做何种解析和加工
  * 对于知识背景来说
  
     gulp更像后端开发者的思路，需要对于整个流程了如指掌
     webpack更倾向于前端开发者的思路
 
 -----------
-### 2.⁉️与webpack类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用webpack？
+### 2. 与webpack类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用webpack？
 同样是基于入口的打包工具还有以下几个主流的：
  * webpack
- * rollup
- * parcel
+ * [rollup](https://rollupjs.org)
+ * [parcel](https://parceljs.org/)
  
  
  **从应用场景上来看：**
  * webpack适用于大型复杂的前端站点构建
- * rollup适用于基础库的打包
- * parcel适用于简单的实验性项目
+ * rollup适用于基础库的打包，如vue、react
+ * parcel适用于简单的实验性项目，他可以满足低门槛的快速看到效果
  > 由于parcel在打包过程中给出的调试信息十分有限，所以一旦打包出错难以调试，所以不建议复杂的项目使用parcel
  
 
@@ -49,7 +55,7 @@ webpack是基于入口的。webpack会自动地递归解析入口所需要加载
 ### 4.有哪些常见的Plugin？他们是解决什么问题的？
  * define-plugin：定义环境变量
  * commons-chunk-plugin：提取公共代码
- * uglifyjs-webpack-plugin：通过 UglifyES 压缩 ES6 代码
+ * uglifyjs-webpack-plugin：通过`UglifyES`压缩`ES6`代码
 
 -----------
 ### 5.Loader和Plugin的不同？
@@ -103,7 +109,7 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
 这个机制可以做到不用刷新浏览器而将新变更的模块替换掉旧的模块。
 
 **原理：**
-![webpack运行机制图](https://pic3.zhimg.com/80/v2-f7139f8763b996ebfa28486e160f6378_hd.jpg)
+![webpack运行机制图](http://cdn.zens.asia/cms/img/1536822594ce23316f.jpg)
 
 首先要知道server端和client端都做了处理工作
  1. 第一步，在 webpack 的 watch 模式下，文件系统中某一个文件发生修改，webpack 监听到文件变化，根据配置文件对模块重新编译打包，并将打包后的代码通过简单的 JavaScript 对象保存在内存中。
@@ -132,20 +138,16 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
 ### 10.如何提高webpack的构建速度？
 
  1. 多入口情况下，使用`CommonsChunkPlugin`来提取公共代码
- 2. 通过 externals 配置来提取常用库
- 3. 利用 DllPlugin 和 DllReferencePlugin 预编译资源模块
-    
+ 2. 通过`externals`配置来提取常用库
+ 3. 利用`DllPlugin`和`DllReferencePlugin`预编译资源模块
     通过`DllPlugin`来对那些我们引用但是绝对不会修改的npm包来进行预编译，再通过`DllReferencePlugin`将预编译的模块加载进来。
-    
  4. 使用` Happypack` 实现多线程加速编译
- 5. 使用`webpack-uglify-parallel`来提升`uglifyPlugin`的压缩速度
- 
+ 5. 使用`webpack-uglify-parallel`来提升`uglifyPlugin`的压缩速度。
     原理上`webpack-uglify-parallel`采用了多核并行压缩来提升压缩速度
-    
  6. 使用`Tree-shaking`和`Scope Hoisting`来剔除多余代码
 
 -----------
-### 11.怎么配置单页应用怎么配置多页应用？
+### 11.怎么配置单页应用？怎么配置多页应用？
 单页应用可以理解为webpack的标准模式，直接在`entry`中指定单页应用的入口即可，这里不再赘述
 
 多页应用的话，可以使用webpack的 `AutoWebPlugin`来完成简单自动化的构建，但是前提是项目的目录结构必须遵守他预设的规范。
@@ -156,15 +158,15 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
 -----------
 
 ### 12.npm打包时需要注意哪些？如何利用webpack来更好的构建？
-`Npm`是目前最大的 JavaScript 模块仓库，里面有来自全世界开发者上传的可复用模块。你可能一直JS模块的使用者，但是有些情况你也会去选择上传自己开发的模块。
+`Npm`是目前最大的 JavaScript 模块仓库，里面有来自全世界开发者上传的可复用模块。你可能只是JS模块的使用者，但是有些情况你也会去选择上传自己开发的模块。
 关于NPM模块上传的方法可以去[官网](https://docs.npmjs.com/)上进行学习，这里只讲解如何利用webpack来构建。
 
 NPM模块需要注意以下问题：
- 1. 要支持CommonJS模块化规范，所以要求打包后的最后结果应该也遵守该规则。
+ 1. 要支持CommonJS模块化规范，所以要求打包后的最后结果也遵守该规则。
  2. Npm模块使用者的环境是不确定的，很有可能并不支持ES6，所以打包的最后结果应该是采用ES5编写的。并且如果ES5是经过转换的，请最好连同SourceMap一同上传。
  3. Npm包大小应该是尽量小（有些仓库会限制包大小）
  4. 发布的模块不能将依赖的模块也一同打包，应该让用户选择性的去自行安装。这样可以避免模块应用者再次打包时出现底层模块被重复打包的情况。
- 5. 该 UI 组件依赖的其它资源文件例如 CSS 文件也需要包含在发布的模块里。
+ 5. UI组件类的模块应该将依赖的其它资源文件，例如`.css`文件也需要包含在发布的模块里。
  
 基于以上需要注意的问题，我们可以对于webpack配置做以下扩展和优化：
  1. CommonJS模块化规范的解决方案： 设置`output.libraryTarget='commonjs2'`使输出的代码符合CommonJS2 模块化规范，以供给其它模块导入使用
@@ -172,7 +174,8 @@ NPM模块需要注意以下问题：
  3. Npm包大小尽量小的解决方案：Babel 在把 ES6 代码转换成 ES5 代码时会注入一些辅助函数，最终导致每个输出的文件中都包含这段辅助函数的代码，造成了代码的冗余。解决方法是修改`.babelrc`文件，为其加入`transform-runtime`插件
  4. 不能将依赖模块打包到NPM模块中的解决方案：使用`externals`配置项来告诉webpack哪些模块不需要打包。
  5. 对于依赖的资源文件打包的解决方案：通过`css-loader`和`extract-text-webpack-plugin`来实现，配置如下：
- ```javascript
+ 
+```javascript
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -227,7 +230,7 @@ module.exports = {
 
     
 通过`import(*)`语句来控制加载时机，webpack内置了对于`import(*)`的解析，会将`import(*)`中引入的模块作为一个新的入口在生成一个chunk。
-当代码执行到`import(*)`语句时，会去加载Chunk对应生成的文件。`import()`会返回一个Promise对象，所以为了让浏览器支持，需要事先注入Promise polyfill
+当代码执行到`import(*)`语句时，会去加载Chunk对应生成的文件。`import()`会返回一个Promise对象，所以为了让浏览器支持，需要事先注入`Promise polyfill`
 
 
 -----------
