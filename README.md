@@ -3,7 +3,6 @@ TGFE  Interview questions and answers
 
 * ### 这是什么？
 [我们](http://www.51tiangou.com/)求贤若渴，同时我们也希望为正在找合适机会的人才提供一个快速回顾已学知识的途径。
-
 希望这里可以帮助到你！
 
 * ### 参与贡献
@@ -16,8 +15,7 @@ TGFE  Interview questions and answers
 ```
 
 * ### 加入我们
-
-[招聘职位](https://www.zhipin.com/gongsi/a70790b9b08c32d003Z_2g~~.html)
+   [招聘职位](https://www.zhipin.com/gongsi/a70790b9b08c32d003Z_2g~~.html)
 
 * ### 面试题目录
 
