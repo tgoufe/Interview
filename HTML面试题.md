@@ -2,7 +2,8 @@
 
 ## **HTML部分**
 
-### 1.<script>写在<head>和<body>中的区别
+### 1.`<script>`写在`<head>`和`<body>`中的区别
+
 ```markdown
    * HTML 标准<script>不应该出现在<body>中
    * 浏览器有容错设计，所以写在<body>中也不会出错
