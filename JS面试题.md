@@ -271,3 +271,10 @@ _A(1,2,3);
 const fn = compose(f1,f2,f3,f4)
 fn(...args) === f1(f2(f3(f4(...args))))
 ```
+
+### 3.实现函数 compact 去除数组中的 falsy 值
+>期望如下
+```javascript 1.8
+compact(['',null,undefined,0,false,NaN,1,2,3,4])
+//[1,2,3,4]
+```
