@@ -247,3 +247,21 @@
 ```markdown
 
 ```
+
+##函数柯里化
+### 1.实现函数 createCurry 
+>已知如下
+```javascript 1.8
+const A = function (a,b,c) {
+    return a + b + c;
+};
+var _A = createCurry(A);
+```
+>希望以下操作结果相同
+```javascript 1.8
+A(1,2,3);
+_A(1)(2)(3);
+_A(1,2)(3);
+_A(1)(2,3);
+_A(1,2,3);
+```
